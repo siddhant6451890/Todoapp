@@ -13,7 +13,7 @@ function saveTasks() {
 function addTask() {
   const text = taskInput.value.trim();
 
-  if (text === "") {
+  if (!text) {
     alert("Please enter a task!");
     return;
   }
@@ -25,63 +25,45 @@ function addTask() {
   });
 
   taskInput.value = "";
-
   saveTasks();
   showTasks();
 }
 
 function toggleDone(index) {
   tasks[index].completed = !tasks[index].completed;
-
   saveTasks();
   showTasks();
 }
 
 function deleteTask(index) {
-  if (confirm("Delete this task?")) {
-    tasks.splice(index, 1);
-
-    saveTasks();
-    showTasks();
-  }
+  tasks.splice(index, 1);
+  saveTasks();
+  showTasks();
 }
 
 function editTask(index) {
-  const newText = prompt(
-    "Edit your task:",
-    tasks[index].text
-  );
+  const text = prompt("Edit task:", tasks[index].text);
 
-  if (newText && newText.trim() !== "") {
-    tasks[index].text = newText.trim();
-
+  if (text && text.trim()) {
+    tasks[index].text = text.trim();
     saveTasks();
     showTasks();
   }
 }
 
-
-/* PHOTO */
-
 function addPhoto(index) {
-
   const input = document.createElement("input");
-
   input.type = "file";
   input.accept = "image/*";
 
-  input.onchange = function(event) {
-
-    const file = event.target.files[0];
-
+  input.onchange = function(e) {
+    const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
 
-    reader.onload = function(e) {
-
-      tasks[index].photo = e.target.result;
-
+    reader.onload = function(event) {
+      tasks[index].photo = event.target.result;
       saveTasks();
       showTasks();
     };
@@ -92,176 +74,97 @@ function addPhoto(index) {
   input.click();
 }
 
-
-/* FILTER */
-
 function setFilter(filter) {
   currentFilter = filter;
   showTasks();
 }
 
-
-/* SHOW TASKS */
-
 function showTasks() {
-
   taskList.innerHTML = "";
 
-  const searchText =
-    searchInput.value.toLowerCase();
+  const search = searchInput.value.toLowerCase();
 
-  const total = tasks.length;
-
-  const completed = tasks.filter(
+  let doneCount = tasks.filter(
     task => task.completed
   ).length;
 
   counter.textContent =
-    `Total: ${total} | Done: ${completed}`;
+    "Total: " + tasks.length +
+    " | Done: " + doneCount;
 
+  tasks.forEach(function(task, index) {
 
-  tasks.forEach((task, index) => {
+    if (!task.text.toLowerCase().includes(search)) return;
 
-    if (
-      !task.text
-        .toLowerCase()
-        .includes(searchText)
-    ) {
-      return;
-    }
+    if (currentFilter === "ACTIVE" && task.completed) return;
 
+    if (currentFilter === "DONE" && !task.completed) return;
 
-    if (
-      currentFilter === "ACTIVE" &&
-      task.completed
-    ) {
-      return;
-    }
+    const div = document.createElement("div");
 
+    div.className =
+      task.completed ? "task done" : "task";
 
-    if (
-      currentFilter === "DONE" &&
-      !task.completed
-    ) {
-      return;
-    }
-
-
-    const taskDiv =
-      document.createElement("div");
-
-
-    taskDiv.className =
-      task.completed
-        ? "task done"
-        : "task";
-
-
-    let photoHTML = "";
-
+    let photo = "";
 
     if (task.photo) {
-
-      photoHTML = `
-        <img
-          src="${task.photo}"
-          class="task-photo"
-          alt="Task photo"
-        >
-      `;
+      photo =
+        '<img src="' + task.photo +
+        '" class="task-photo">';
     }
 
+    div.innerHTML =
+      photo +
+      '<div class="task-text">' +
+      task.text +
+      '</div>' +
 
-    taskDiv.innerHTML = `
+      '<div class="task-buttons">' +
 
-      <div class="task-content">
+      '<button class="edit" onclick="editTask(' + index + ')">EDIT</button>' +
 
-        ${photoHTML}
+      '<button class="photo" onclick="addPhoto(' + index + ')">📷 PHOTO</button>' +
 
-        <div class="task-text">
+      '<button class="done" onclick="toggleDone(' + index + ')">' +
+      (task.completed ? "UNDO" : "DONE") +
+      '</button>' +
 
-          ${task.completed
-            ? "DONE - "
-            : "• "
-          }
+      '<button class="delete" onclick="deleteTask(' + index + ')">DELETE</button>' +
 
-          ${task.text}
+      '</div>';
 
-        </div>
-
-      </div>
-
-
-      <div class="task-buttons">
-
-        <button
-          class="edit"
-          onclick="editTask(${index})"
-        >
-          EDIT
-        </button>
-
-
-        <button
-          class="photo"
-          onclick="addPhoto(${index})"
-        >
-          📷 PHOTO
-        </button>
-
-
-        <button
-          class="done"
-          onclick="toggleDone(${index})"
-        >
-          ${task.completed
-            ? "UNDO"
-            : "DONE"
-          }
-        </button>
-
-
-        <button
-          class="delete"
-          onclick="deleteTask(${index})"
-        >
-          DELETE
-        </button>
-
-      </div>
-
-    `;
-
-
-    taskList.appendChild(taskDiv);
-
+    taskList.appendChild(div);
   });
-
 }
 
-
 /* SEARCH */
+searchInput.addEventListener("input", showTasks);
 
-searchInput.addEventListener(
-  "input",
-  showTasks
-);
-
-
-/* ENTER KEY */
-
-taskInput.addEventListener(
-  "keypress",
-  function(event) {
-
-    if (event.key === "Enter") {
-      addTask();
-    }
-
+/* ENTER */
+taskInput.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    addTask();
   }
-);
+});
 
+/* CLOCK */
+function updateClock() {
+  const now = new Date();
+
+  const clock = document.getElementById("clock");
+  const date = document.getElementById("date");
+
+  if (clock) {
+    clock.innerText = now.toLocaleTimeString();
+  }
+
+  if (date) {
+    date.innerText = now.toDateString();
+  }
+}
+
+updateClock();
+setInterval(updateClock, 1000);
 
 /* START */
-
 showTasks();
