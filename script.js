@@ -1,6 +1,212 @@
+/* ================= ACCOUNTS ================= */
+
+let accounts =
+  JSON.parse(localStorage.getItem("accounts")) || [];
+
+let currentUser =
+  localStorage.getItem("currentUser");
 
 
-/* SHO {
+function saveAccounts() {
+
+  localStorage.setItem(
+    "accounts",
+    JSON.stringify(accounts)
+  );
+}
+
+
+/* ================= SHOW LOGIN ================= */
+
+function showLogin() {
+
+  document.getElementById(
+    "loginPage"
+  ).style.display = "flex";
+
+  document.getElementById(
+    "signupPage"
+  ).style.display = "none";
+
+  document.getElementById(
+    "appPage"
+  ).style.display = "none";
+}
+
+
+/* ================= SHOW SIGNUP ================= */
+
+function showSignup() {
+
+  document.getElementById(
+    "loginPage"
+  ).style.display = "none";
+
+  document.getElementById(
+    "signupPage"
+  ).style.display = "flex";
+}
+
+
+/* ================= SIGNUP ================= */
+
+function signup() {
+
+  const username =
+    document
+      .getElementById("signupUsername")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("signupPassword")
+      .value;
+
+  const confirmPassword =
+    document
+      .getElementById("confirmPassword")
+      .value;
+
+
+  if (!username || !password || !confirmPassword) {
+
+    alert("Please fill all fields!");
+
+    return;
+  }
+
+
+  if (password !== confirmPassword) {
+
+    alert("Passwords do not match!");
+
+    return;
+  }
+
+
+  const exists =
+    accounts.find(
+      account =>
+        account.username === username
+    );
+
+
+  if (exists) {
+
+    alert("Username already exists!");
+
+    return;
+  }
+
+
+  accounts.push({
+    username: username,
+    password: password
+  });
+
+
+  saveAccounts();
+
+
+  alert(
+    "Account created successfully!"
+  );
+
+
+  document
+    .getElementById("signupUsername")
+    .value = "";
+
+  document
+    .getElementById("signupPassword")
+    .value = "";
+
+  document
+    .getElementById("confirmPassword")
+    .value = "";
+
+
+  showLogin();
+}
+
+
+/* ================= LOGIN ================= */
+
+function login() {
+
+  const username =
+    document
+      .getElementById("loginUsername")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
+
+
+  if (!username || !password) {
+
+    alert("Please enter username and password!");
+
+    return;
+  }
+
+
+  const account =
+    accounts.find(
+      account =>
+
+        account.username === username &&
+
+        account.password === password
+    );
+
+
+  if (!account) {
+
+    alert(
+      "Invalid username or password!"
+    );
+
+    return;
+  }
+
+
+  currentUser = username;
+
+
+  localStorage.setItem(
+    "currentUser",
+    username
+  );
+
+
+  openApp();
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logout() {
+
+  currentUser = null;
+
+
+  localStorage.removeItem(
+    "currentUser"
+  );
+
+
+  showLogin();
+}
+
+
+/* ================= OPEN APP ================= */
+
+function openApp() {
 
   document.getElementById(
     "loginPage"
@@ -62,7 +268,7 @@ function saveTasks() {
 }
 
 
-/* ADD TASK */
+/* ================= ADD TASK ================= */
 
 function addTask() {
 
@@ -104,7 +310,7 @@ function addTask() {
 }
 
 
-/* DONE */
+/* ================= DONE ================= */
 
 function toggleDone(index) {
 
@@ -118,7 +324,7 @@ function toggleDone(index) {
 }
 
 
-/* DELETE */
+/* ================= DELETE ================= */
 
 function deleteTask(index) {
 
@@ -136,7 +342,7 @@ function deleteTask(index) {
 }
 
 
-/* EDIT */
+/* ================= EDIT ================= */
 
 function editTask(index) {
 
@@ -164,7 +370,7 @@ function editTask(index) {
 }
 
 
-/* PHOTO */
+/* ================= PHOTO ================= */
 
 function addPhoto(index) {
 
@@ -380,7 +586,7 @@ document
   );
 
 
-/* ENTER KEY */
+/* ================= ENTER KEY ================= */
 
 document
   .getElementById("taskInput")
@@ -441,7 +647,7 @@ function updateStopwatch() {
 
     ":" +
 
-    String(ثوانٍ)
+    String(seconds)
       .padStart(2, "0");
 }
 
@@ -449,7 +655,78 @@ function updateStopwatch() {
 function startStopwatch() {
 
   if (
-    
+    stopwatchInterval !== null
+  ) {
+
+    return;
+
+  }
+
+
+  stopwatchInterval =
+    setInterval(
+      function() {
+
+        stopwatchSeconds++;
+
+        updateStopwatch();
+
+      },
+      1000
+    );
+}
+
+
+function stopStopwatch() {
+
+  clearInterval(
+    stopwatchInterval
+  );
+
+
+  stopwatchInterval = null;
+}
+
+
+function resetStopwatch() {
+
+  stopStopwatch();
+
+
+  stopwatchSeconds = 0;
+
+
+  updateStopwatch();
+}
+
+
+/* ================= ABOUT ================= */
+
+function openAbout() {
+
+  document.getElementById(
+    "aboutPage"
+  ).style.display = "block";
+}
+
+
+function closeAbout() {
+
+  document.getElementById(
+    "aboutPage"
+  ).style.display = "none";
+}
+
+
+/* ================= START APP ================= */
+
+updateStopwatch();
+
+
+if (currentUser) {
+
+  openApp();
+
 } else {
 
   showLogin();
