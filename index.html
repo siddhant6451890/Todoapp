@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,30 +13,40 @@
 
   <div class="container">
 
+    <!-- HEADER -->
     <div class="header">
+
       <h1>MY TO-DO APP</h1>
 
-      <div id="clock">00:00:00</div>
-      <div id="date">Loading date...</div>
+      <!-- STOPWATCH -->
+      <div id="stopwatch">00:00:00</div>
+
+      <div class="stopwatch-buttons">
+        <button onclick="startStopwatch()">▶ START</button>
+        <button onclick="stopStopwatch()">⏸ STOP</button>
+        <button onclick="resetStopwatch()">🔄 RESET</button>
+      </div>
+
+      <!-- ABOUT -->
+      <button class="about-btn" onclick="openAbout()">
+        ℹ️ ABOUT
+      </button>
+
     </div>
 
-
+    <!-- COUNTER -->
     <div id="counter">
       Total: 0 | Done: 0
     </div>
 
-
     <!-- SEARCH -->
-
     <input
       type="text"
       id="searchInput"
       placeholder="🔍 Search tasks..."
     >
 
-
     <!-- ADD TASK -->
-
     <div class="add-task">
 
       <input
@@ -46,47 +55,111 @@
         placeholder="Enter new task..."
       >
 
-      <button
-        type="button"
-        onclick="addTask()"
-      >
+      <button onclick="addTask()">
         ADD TASK
       </button>
 
     </div>
 
-
     <!-- FILTERS -->
-
     <div class="filters">
 
-      <button
-        type="button"
-        onclick="setFilter('ALL')"
-      >
+      <button onclick="setFilter('ALL')">
         ALL
       </button>
 
-      <button
-        type="button"
-        onclick="setFilter('ACTIVE')"
-      >
+      <button onclick="setFilter('ACTIVE')">
         ACTIVE
       </button>
 
-      <button
-        type="button"
-        onclick="setFilter('DONE')"
-      >
+      <button onclick="setFilter('DONE')">
         DONE
       </button>
 
     </div>
 
-
     <!-- TASK LIST -->
-
     <div id="taskList"></div>
+
+  </div>
+
+
+  <!-- ABOUT PAGE -->
+
+  <div id="aboutPage" class="about-page">
+
+    <div class="about-card">
+
+      <div class="about-icon">✓</div>
+
+      <h2>My To-Do App</h2>
+
+      <p class="version">Version 1.0</p>
+
+
+      <div class="about-info">
+
+        <div class="info-row">
+
+          <span>📱</span>
+
+          <div>
+            <b>Simple & Powerful</b>
+
+            <p>
+              Manage your daily tasks easily.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span>⏱️</span>
+
+          <div>
+            <b>Stay Productive</b>
+
+            <p>
+              Track your time using the built-in stopwatch.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span>👨‍💻</span>
+
+          <div>
+            <b>Created By</b>
+
+            <p>
+              Siddhant Ojha
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="about-footer">
+
+        ❤️ Thank you for using My To-Do App!
+
+      </div>
+
+
+      <button class="back-btn" onclick="closeAbout()">
+
+        ← BACK
+
+      </button>
+
+    </div>
 
   </div>
 
