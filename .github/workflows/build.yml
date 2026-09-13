@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android AAB
 
 on:
   push:
@@ -14,15 +14,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build APK
+      - name: Build AAB
         run: |
           docker run --rm \
             -v "$PWD":/home/user/hostcwd \
             kivy/buildozer:latest \
             android debug
 
-      - name: Upload APK
+      - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
-          name: TodoApp-APK
-          path: bin/*.apk
+          name: TodoApp-AAB
+          path: bin/*.aab
