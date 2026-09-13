@@ -544,7 +544,7 @@ function showTasks() {
 
 
         '<button class="photo" onclick="addPhoto(' +
-        index +
+        index +camera
         ')">📷 PHOTO</button>' +
 
 
