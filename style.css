@@ -45,10 +45,11 @@ input {
 }
 
 button {
-  padding: 12px 15px;
+  padding: 12px;
   border: none;
   border-radius: 10px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .add-task button {
@@ -71,14 +72,18 @@ button {
 .task {
   background: #252535;
   padding: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   border-radius: 12px;
+}
+
+.task-content {
+  margin-bottom: 12px;
 }
 
 .task-text {
   color: #00ff88;
   font-size: 18px;
-  margin-bottom: 10px;
+  padding: 5px 0;
 }
 
 .task.done .task-text {
@@ -86,13 +91,27 @@ button {
   text-decoration: line-through;
 }
 
+.task-photo {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
 .task-buttons {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .edit {
   background: orange;
+}
+
+.photo {
+  background: #8e44ad;
+  color: white;
 }
 
 .done {
