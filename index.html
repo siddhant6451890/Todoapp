@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>My To-Do App</title>
@@ -19,11 +20,17 @@
       Total: 0 | Done: 0
     </div>
 
+
+    <!-- SEARCH -->
+
     <input
       type="text"
       id="searchInput"
       placeholder="Search tasks..."
     >
+
+
+    <!-- ADD TASK -->
 
     <div class="add-task">
 
@@ -33,7 +40,18 @@
         placeholder="Enter new task..."
       >
 
-      <button onclick="addPhoto()">📷 PHOTO</button>
+
+      <!-- PHOTO BUTTON -->
+
+      <button
+        type="button"
+        onclick="addPhoto()"
+      >
+        📷 PHOTO
+      </button>
+
+
+      <!-- HIDDEN PHOTO INPUT -->
 
       <input
         type="file"
@@ -43,31 +61,57 @@
         style="display: none;"
       >
 
-      <button onclick="addTask()">
+
+      <!-- ADD TASK BUTTON -->
+
+      <button
+        type="button"
+        onclick="addTask()"
+      >
         ADD TASK
       </button>
 
     </div>
 
+
+    <!-- FILTER BUTTONS -->
+
     <div class="filters">
 
-      <button onclick="setFilter('ALL')">
+      <button
+        type="button"
+        onclick="setFilter('ALL')"
+      >
         ALL
       </button>
 
-      <button onclick="setFilter('ACTIVE')">
+
+      <button
+        type="button"
+        onclick="setFilter('ACTIVE')"
+      >
         ACTIVE
       </button>
 
-      <button onclick="setFilter('DONE')">
+
+      <button
+        type="button"
+        onclick="setFilter('DONE')"
+      >
         DONE
       </button>
 
     </div>
 
+
+    <!-- TASK LIST -->
+
     <div id="taskList"></div>
 
   </div>
+
+
+  <!-- JAVASCRIPT -->
 
   <script src="script.js"></script>
 
