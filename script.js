@@ -1,22 +1,94 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let currentFilter = "ALL";
 
-const taskInput = document.getElementById("taskInput");
-const searchInput = document.getElementById("searchInput");
-const taskList = document.getElementById("taskList");
-const counter = document.getElementById("counter");
 
-function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+/* ================= STOPWATCH ================= */
+
+let stopwatchSeconds = 0;
+let stopwatchInterval = null;
+
+
+function updateStopwatch() {
+
+  const hours = Math.floor(stopwatchSeconds / 3600);
+
+  const minutes = Math.floor(
+    (stopwatchSeconds % 3600) / 60
+  );
+
+  const seconds = stopwatchSeconds % 60;
+
+
+  document.getElementById("stopwatch").textContent =
+    String(hours).padStart(2, "0") + ":" +
+    String(minutes).padStart(2, "0") + ":" +
+    String(seconds).padStart(2, "0");
 }
 
+
+function startStopwatch() {
+
+  if (stopwatchInterval !== null) return;
+
+  stopwatchInterval = setInterval(function() {
+
+    stopwatchSeconds++;
+
+    updateStopwatch();
+
+  }, 1000);
+}
+
+
+function stopStopwatch() {
+
+  clearInterval(stopwatchInterval);
+
+  stopwatchInterval = null;
+}
+
+
+function resetStopwatch() {
+
+  stopStopwatch();
+
+  stopwatchSeconds = 0;
+
+  updateStopwatch();
+}
+
+
+/* ================= TASK APP ================= */
+
+const taskInput = document.getElementById("taskInput");
+
+const searchInput = document.getElementById("searchInput");
+
+const taskList = document.getElementById("taskList");
+
+const counter = document.getElementById("counter");
+
+
+function saveTasks() {
+
+  localStorage.setItem(
+    "tasks",
+    JSON.stringify(tasks)
+  );
+}
+
+
 function addTask() {
+
   const text = taskInput.value.trim();
 
-  if (!text) {
+  if (text === "") {
+
     alert("Please enter a task!");
+
     return;
   }
+
 
   tasks.push({
     text: text,
@@ -24,147 +96,273 @@ function addTask() {
     photo: ""
   });
 
+
   taskInput.value = "";
+
   saveTasks();
+
   showTasks();
 }
+
 
 function toggleDone(index) {
-  tasks[index].completed = !tasks[index].completed;
+
+  tasks[index].completed =
+    !tasks[index].completed;
+
   saveTasks();
+
   showTasks();
 }
+
 
 function deleteTask(index) {
-  tasks.splice(index, 1);
-  saveTasks();
-  showTasks();
-}
 
-function editTask(index) {
-  const text = prompt("Edit task:", tasks[index].text);
+  if (confirm("Delete this task?")) {
 
-  if (text && text.trim()) {
-    tasks[index].text = text.trim();
+    tasks.splice(index, 1);
+
     saveTasks();
+
     showTasks();
   }
 }
 
+
+function editTask(index) {
+
+  const newText = prompt(
+    "Edit your task:",
+    tasks[index].text
+  );
+
+
+  if (newText && newText.trim() !== "") {
+
+    tasks[index].text =
+      newText.trim();
+
+    saveTasks();
+
+    showTasks();
+  }
+}
+
+
+/* ================= PHOTO ================= */
+
 function addPhoto(index) {
-  const input = document.createElement("input");
+
+  const input =
+    document.createElement("input");
+
+
   input.type = "file";
+
   input.accept = "image/*";
 
-  input.onchange = function(e) {
-    const file = e.target.files[0];
+
+  input.onchange = function(event) {
+
+    const file =
+      event.target.files[0];
+
     if (!file) return;
 
-    const reader = new FileReader();
 
-    reader.onload = function(event) {
-      tasks[index].photo = event.target.result;
+    const reader =
+      new FileReader();
+
+
+    reader.onload = function(e) {
+
+      tasks[index].photo =
+        e.target.result;
+
       saveTasks();
+
       showTasks();
     };
+
 
     reader.readAsDataURL(file);
   };
 
+
   input.click();
 }
 
+
+/* ================= FILTER ================= */
+
 function setFilter(filter) {
+
   currentFilter = filter;
+
   showTasks();
 }
 
+
+/* ================= SHOW TASKS ================= */
+
 function showTasks() {
+
   taskList.innerHTML = "";
 
-  const search = searchInput.value.toLowerCase();
 
-  let doneCount = tasks.filter(
-    task => task.completed
-  ).length;
+  const searchText =
+    searchInput.value.toLowerCase();
+
+
+  const completed =
+    tasks.filter(
+      task => task.completed
+    ).length;
+
 
   counter.textContent =
-    "Total: " + tasks.length +
-    " | Done: " + doneCount;
+    `Total: ${tasks.length} | Done: ${completed}`;
+
 
   tasks.forEach(function(task, index) {
 
-    if (!task.text.toLowerCase().includes(search)) return;
-
-    if (currentFilter === "ACTIVE" && task.completed) return;
-
-    if (currentFilter === "DONE" && !task.completed) return;
-
-    const div = document.createElement("div");
-
-    div.className =
-      task.completed ? "task done" : "task";
-
-    let photo = "";
-
-    if (task.photo) {
-      photo =
-        '<img src="' + task.photo +
-        '" class="task-photo">';
+    if (
+      !task.text
+        .toLowerCase()
+        .includes(searchText)
+    ) {
+      return;
     }
 
-    div.innerHTML =
-      photo +
+
+    if (
+      currentFilter === "ACTIVE" &&
+      task.completed
+    ) {
+      return;
+    }
+
+
+    if (
+      currentFilter === "DONE" &&
+      !task.completed
+    ) {
+      return;
+    }
+
+
+    const taskDiv =
+      document.createElement("div");
+
+
+    taskDiv.className =
+      task.completed
+        ? "task done"
+        : "task";
+
+
+    let photoHTML = "";
+
+
+    if (task.photo) {
+
+      photoHTML =
+        '<img src="' +
+        task.photo +
+        '" class="task-photo" alt="Task Photo">';
+    }
+
+
+    taskDiv.innerHTML =
+
+      '<div class="task-content">' +
+
+      photoHTML +
+
       '<div class="task-text">' +
       task.text +
       '</div>' +
 
+      '</div>' +
+
+
       '<div class="task-buttons">' +
 
-      '<button class="edit" onclick="editTask(' + index + ')">EDIT</button>' +
 
-      '<button class="photo" onclick="addPhoto(' + index + ')">📷 PHOTO</button>' +
+      '<button class="edit" onclick="editTask(' +
+      index +
+      ')">EDIT</button>' +
 
-      '<button class="done" onclick="toggleDone(' + index + ')">' +
+
+      '<button class="photo" onclick="addPhoto(' +
+      index +
+      ')">📷 PHOTO</button>' +
+
+
+      '<button class="done" onclick="toggleDone(' +
+      index +
+      ')">' +
       (task.completed ? "UNDO" : "DONE") +
       '</button>' +
 
-      '<button class="delete" onclick="deleteTask(' + index + ')">DELETE</button>' +
+
+      '<button class="delete" onclick="deleteTask(' +
+      index +
+      ')">DELETE</button>' +
+
 
       '</div>';
 
-    taskList.appendChild(div);
+
+    taskList.appendChild(taskDiv);
+
   });
 }
 
-/* SEARCH */
-searchInput.addEventListener("input", showTasks);
 
-/* ENTER */
-taskInput.addEventListener("keypress", function(e) {
-  if (e.key === "Enter") {
-    addTask();
+/* ================= SEARCH ================= */
+
+searchInput.addEventListener(
+  "input",
+  showTasks
+);
+
+
+/* ================= ENTER KEY ================= */
+
+taskInput.addEventListener(
+  "keypress",
+  function(event) {
+
+    if (event.key === "Enter") {
+
+      addTask();
+    }
+
   }
-});
+);
 
-/* CLOCK */
-function updateClock() {
-  const now = new Date();
 
-  const clock = document.getElementById("clock");
-  const date = document.getElementById("date");
+/* ================= ABOUT ================= */
 
-  if (clock) {
-    clock.innerText = now.toLocaleTimeString();
-  }
+function openAbout() {
 
-  if (date) {
-    date.innerText = now.toDateString();
-  }
+  document.getElementById(
+    "aboutPage"
+  ).style.display = "block";
 }
 
-updateClock();
-setInterval(updateClock, 1000);
 
-/* START */
+function closeAbout() {
+
+  document.getElementById(
+    "aboutPage"
+  ).style.display = "none";
+}
+
+
+/* ================= START APP ================= */
+
+updateStopwatch();
+
 showTasks();
