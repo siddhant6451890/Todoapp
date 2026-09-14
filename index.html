@@ -1,327 +1,386 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8"><meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>My To-Do App</title>  <link rel="stylesheet" href="style.css">
-</head><body>  <!-- LOGIN PAGE -->  <div id="loginPage" class="auth-page">
-    <div class="auth-card">  <div class="app-logo">✓</div>
+  <title>My To-Do App</title>
 
-  <h1>MY TO-DO APP</h1>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  <p class="auth-subtitle">
-    Organize your life easily
-  </p>
+<body>
 
-  <input
-    type="text"
-    id="loginUsername"
-    placeholder="👤 Username"
-  >
+  <!-- LOGIN PAGE -->
+  <div id="loginPage" class="auth-page">
 
-  <input
-    type="password"
-    id="loginPassword"
-    placeholder="🔒 Password"
-  >
+    <div class="auth-card">
 
-  <button
-    class="primary-btn"
-    onclick="login()"
-  >
-    LOGIN
-  </button>
+      <div class="app-logo">✓</div>
 
-  <p class="switch-text">
-    Don't have an account?
-  </p>
+      <h1>MY TO-DO APP</h1>
 
-  <button
-    class="secondary-btn"
-    onclick="showSignup()"
-  >
-    CREATE ACCOUNT
-  </button>
+      <p class="auth-subtitle">
+        Organize your life easily
+      </p>
 
-</div>
+      <input
+        type="text"
+        id="loginUsername"
+        placeholder="👤 Username"
+      >
 
-  </div>  <!-- SIGNUP PAGE -->  <div
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="🔒 Password"
+      >
+
+      <button
+        class="primary-btn"
+        onclick="login()"
+      >
+        LOGIN
+      </button>
+
+      <p class="switch-text">
+        Don't have an account?
+      </p>
+
+      <button
+        class="secondary-btn"
+        onclick="showSignup()"
+      >
+        CREATE ACCOUNT
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SIGNUP PAGE -->
+  <div
     id="signupPage"
     class="auth-page"
     style="display: none;"
-  ><div class="auth-card">
-
-  <div class="app-logo">✓</div>
-
-  <h1>CREATE ACCOUNT</h1>
-
-  <p class="auth-subtitle">
-    Join My To-Do App
-  </p>
-
-  <input
-    type="text"
-    id="signupUsername"
-    placeholder="👤 Choose Username"
   >
 
-  <input
-    type="password"
-    id="signupPassword"
-    placeholder="🔒 Create Password"
-  >
+    <div class="auth-card">
 
-  <input
-    type="password"
-    id="confirmPassword"
-    placeholder="🔒 Confirm Password"
-  >
+      <div class="app-logo">✓</div>
 
-  <button
-    class="primary-btn"
-    onclick="signup()"
-  >
-    SIGN UP
-  </button>
+      <h1>CREATE ACCOUNT</h1>
 
-  <button
-    class="secondary-btn"
-    onclick="showLogin()"
-  >
-    ← BACK TO LOGIN
-  </button>
+      <p class="auth-subtitle">
+        Join My To-Do App
+      </p>
 
-</div>
+      <input
+        type="text"
+        id="signupUsername"
+        placeholder="👤 Choose Username"
+      >
 
-  </div>  <!-- MAIN APP -->  <div
-    id="appPage"
-    style="display: none;"
-  ><div class="container">
+      <input
+        type="password"
+        id="signupPassword"
+        placeholder="🔒 Create Password"
+      >
 
-  <!-- HEADER -->
-  <div class="header">
-
-    <div class="top-bar">
-
-      <div>
-        <h1>MY TO-DO APP</h1>
-
-        <p id="welcomeUser">
-          Welcome!
-        </p>
-      </div>
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="🔒 Confirm Password"
+      >
 
       <button
-        class="logout-btn"
-        onclick="logout()"
+        class="primary-btn"
+        onclick="signup()"
       >
-        LOGOUT
+        SIGN UP
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="showLogin()"
+      >
+        ← BACK TO LOGIN
       </button>
 
     </div>
-
-
-    <!-- STOPWATCH -->
-    <div id="stopwatch">
-      00:00:00
-    </div>
-
-    <div class="stopwatch-buttons">
-
-      <button onclick="startStopwatch()">
-        ▶ START
-      </button>
-
-      <button onclick="stopStopwatch()">
-        ⏸ STOP
-      </button>
-
-      <button onclick="resetStopwatch()">
-        🔄 RESET
-      </button>
-
-    </div>
-
-
-    <!-- ABOUT -->
-    <button
-      class="about-btn"
-      onclick="openAbout()"
-    >
-      ℹ️ ABOUT
-    </button>
 
   </div>
 
 
-  <!-- COUNTER -->
-  <div id="counter">
-    Total: 0 | Done: 0
-  </div>
-
-
-  <!-- SEARCH -->
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="🔍 Search tasks..."
+  <!-- MAIN APP -->
+  <div
+    id="appPage"
+    style="display: none;"
   >
 
+    <div class="container">
 
-  <!-- ADD TASK -->
-  <div class="add-task">
+      <!-- HEADER -->
+      <div class="header">
 
-    <input
-      type="text"
-      id="taskInput"
-      placeholder="Enter new task..."
-    >
+        <div class="top-bar">
 
-    <button onclick="addTask()">
-      ADD TASK
-    </button>
+          <div>
+
+            <h1>MY TO-DO APP</h1>
+
+            <p id="welcomeUser">
+              Welcome!
+            </p>
+
+          </div>
+
+          <button
+            class="logout-btn"
+            onclick="logout()"
+          >
+            LOGOUT
+          </button>
+
+        </div>
+
+
+        <!-- STOPWATCH -->
+        <div id="stopwatch">
+          00:00:00
+        </div>
+
+        <div class="stopwatch-buttons">
+
+          <button onclick="startStopwatch()">
+            ▶ START
+          </button>
+
+          <button onclick="stopStopwatch()">
+            ⏸ STOP
+          </button>
+
+          <button onclick="resetStopwatch()">
+            🔄 RESET
+          </button>
+
+        </div>
+
+
+        <!-- ABOUT -->
+        <button
+          class="about-btn"
+          onclick="openAbout()"
+        >
+          ℹ️ ABOUT
+        </button>
+
+      </div>
+
+
+      <!-- COUNTER -->
+      <div id="counter">
+        Total: 0 | Done: 0
+      </div>
+
+
+      <!-- SEARCH -->
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search tasks..."
+      >
+
+
+      <!-- ADD TASK -->
+      <div class="add-task">
+
+        <input
+          type="text"
+          id="taskInput"
+          placeholder="Enter new task..."
+        >
+
+        <button onclick="addTask()">
+          ADD TASK
+        </button>
+
+      </div>
+
+
+      <!-- FILTERS -->
+      <div class="filters">
+
+        <button onclick="setFilter('ALL')">
+          ALL
+        </button>
+
+        <button onclick="setFilter('ACTIVE')">
+          ACTIVE
+        </button>
+
+        <button onclick="setFilter('DONE')">
+          DONE
+        </button>
+
+      </div>
+
+
+      <!-- TASK LIST -->
+      <div id="taskList"></div>
+
+
+      <!-- DOWNLOAD APP SECTION -->
+      <section class="download-app">
+
+        <div class="download-icon">
+          📱
+        </div>
+
+        <h2>
+          Download My To-Do App
+        </h2>
+
+        <p>
+          Manage your daily tasks anytime, anywhere.
+          Download the Android app for free!
+        </p>
+
+        <div class="download-features">
+
+          <span>✓ Easy Tasks</span>
+          <span>✓ Stopwatch</span>
+          <span>✓ Photo Tasks</span>
+          <span>✓ Free</span>
+
+        </div>
+
+
+        <!-- GOOGLE DRIVE APK DOWNLOAD -->
+        <a
+          href="https://drive.google.com/uc?export=download&id=15HZz1enTd9Q79_KnFMLe_cv_TQtzq4L6"
+          class="download-btn"
+          target="_blank"
+        >
+          📥 DOWNLOAD APP
+        </a>
+
+
+        <p class="download-info">
+          Android APK • Free Download
+        </p>
+
+      </section>
+
+
+    </div>
 
   </div>
 
 
-  <!-- FILTERS -->
-  <div class="filters">
-
-    <button onclick="setFilter('ALL')">
-      ALL
-    </button>
-
-    <button onclick="setFilter('ACTIVE')">
-      ACTIVE
-    </button>
-
-    <button onclick="setFilter('DONE')">
-      DONE
-    </button>
-
-  </div>
-
-
-  <!-- TASK LIST -->
-  <div id="taskList"></div>
-
-
-  <!-- DOWNLOAD APP SECTION -->
-  <section class="download-app">
-
-    <div class="download-icon">
-      📱
-    </div>
-
-    <h2>Download My To-Do App</h2>
-
-    <p>
-      Manage your daily tasks anytime, anywhere.
-      Download the Android app for free!
-    </p>
-
-    <div class="download-features">
-      <span>✓ Easy Tasks</span>
-      <span>✓ Stopwatch</span>
-      <span>✓ Photo Tasks</span>
-      <span>✓ Free</span>
-    </div>
-
-    <a
-      href="t.apk"
-      class="download-btn"
-      download
-    >
-      📥 DOWNLOAD APP
-    </a>
-
-    <p class="download-info">
-      Android APK • Free Download
-    </p>
-
-  </section>
-
-
-</div>
-
-  </div>  <!-- ABOUT PAGE -->  <div
+  <!-- ABOUT PAGE -->
+  <div
     id="aboutPage"
     class="about-page"
-  ><div class="about-card">
-
-  <div class="about-icon">
-    ✓
-  </div>
-
-  <h2>My To-Do App</h2>
-
-  <p class="version">
-    Version 1.0
-  </p>
-
-
-  <div class="about-info">
-
-    <div class="info-row">
-
-      <span>📋</span>
-
-      <div>
-        <b>Simple & Powerful</b>
-
-        <p>
-          Manage your daily tasks easily.
-        </p>
-      </div>
-
-    </div>
-
-
-    <div class="info-row">
-
-      <span>⏱️</span>
-
-      <div>
-        <b>Stay Productive</b>
-
-        <p>
-          Track your time with the stopwatch.
-        </p>
-      </div>
-
-    </div>
-
-
-    <div class="info-row">
-
-      <span>👨‍💻</span>
-
-      <div>
-        <b>Created By</b>
-
-        <p>
-          Siddhant Ojha
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="about-footer">
-    ❤️ Thank you for using My To-Do App!
-  </div>
-
-
-  <button
-    class="back-btn"
-    onclick="closeAbout()"
   >
-    ← BACK
-  </button>
 
-</div>
+    <div class="about-card">
 
-  </div>  <script src="script.js"></script></body>
+      <div class="about-icon">
+        ✓
+      </div>
+
+      <h2>
+        My To-Do App
+      </h2>
+
+      <p class="version">
+        Version 1.0
+      </p>
+
+
+      <div class="about-info">
+
+        <div class="info-row">
+
+          <span>📋</span>
+
+          <div>
+
+            <b>
+              Simple & Powerful
+            </b>
+
+            <p>
+              Manage your daily tasks easily.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span>⏱️</span>
+
+          <div>
+
+            <b>
+              Stay Productive
+            </b>
+
+            <p>
+              Track your time with the stopwatch.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span>👨‍💻</span>
+
+          <div>
+
+            <b>
+              Created By
+            </b>
+
+            <p>
+              Siddhant Ojha
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="about-footer">
+        ❤️ Thank you for using My To-Do App!
+      </div>
+
+
+      <button
+        class="back-btn"
+        onclick="closeAbout()"
+      >
+        ← BACK
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+
 </html>
