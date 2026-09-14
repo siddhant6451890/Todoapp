@@ -565,3 +565,33 @@ input:focus {
   }
 
 }
+
+
+/* ================================================================= */
+/* 💰 MONETIZATION: AD CONTAINER VISUAL FIX                           */
+/* Forces a dashed test-box to appear over the unapproved script tag */
+/* ================================================================= */
+.ad-container .adsbygoogle {
+    display: block !important;
+    min-height: 90px;
+    background: #ffffff;
+    border: 2px dashed #1976d2;
+    border-radius: 14px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.ad-container .adsbygoogle::before {
+    content: "📢 Google Ad Space (Awaiting Account Activation)";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    color: #1976d2;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+}
+/* ================================================================= */
