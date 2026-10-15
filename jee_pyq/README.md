@@ -1,4 +1,4 @@
-# JEE Previous Year Questions (PYQ) — 2000–2026
+# JEE Previous Year Questions (PYQ) — 2000-2026
 
 This directory contains templates and an index to collect JEE (Main & Advanced) previous year questions from 2000 to 2026, organized by year and subject. It's intended to help JEE aspirants keep all PYQs and solutions in one place.
 
