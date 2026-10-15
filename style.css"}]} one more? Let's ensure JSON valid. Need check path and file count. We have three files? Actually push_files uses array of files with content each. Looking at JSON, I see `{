@@ -1,0 +1,8 @@
+# Todoapp
+My first Android To-Do app built with Python and Kivy. Features include adding, editing, deleting, completing, searching tasks and adding photos.
+
+AI enhancements added:
+- Smart task categorization and priority detection
+- AI-powered workflow summary panel
+- Recommended next action for the top task
+- Personalized task tags for Work, Health, Learning, Shopping, and Life categories
